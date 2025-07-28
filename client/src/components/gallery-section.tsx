@@ -3,24 +3,24 @@ export default function GallerySection() {
     {
       title: "Professional lawn striping and maintenance - Quality results you can see",
       before: "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "@assets/IMG_8843_1753669932336.JPG"
+      after: "/images/IMG_8843_1753669932336.JPG"
     },
     {
       title: "Front yard walkway and lawn installation - Clean, modern design",
       before: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "@assets/IMG_9048_1753669932336.JPG"
+      after: "/images/IMG_9048_1753669932336.JPG"
     }
   ];
 
   const galleryImages = [
-    "@assets/IMG_8843_1753669932336.JPG",
-    "@assets/IMG_9048_1753669932336.JPG", 
-    "@assets/IMG_9100_1753669932337.JPG",
-    "@assets/IMG_9104_1753669932337.JPG",
-    "@assets/IMG_9427_1753669932337.JPG",
-    "@assets/IMG_8843_1753669932336.JPG",
-    "@assets/IMG_9048_1753669932336.JPG",
-    "@assets/IMG_9100_1753669932337.JPG"
+    "/images/IMG_8843_1753669932336.JPG",
+    "/images/IMG_9048_1753669932336.JPG", 
+    "/images/IMG_9100_1753669932337.JPG",
+    "/images/IMG_9104_1753669932337.JPG",
+    "/images/IMG_9427_1753669932337.JPG",
+    "/images/IMG_8843_1753669932336.JPG",
+    "/images/IMG_9048_1753669932336.JPG",
+    "/images/IMG_9100_1753669932337.JPG"
   ];
 
   return (
