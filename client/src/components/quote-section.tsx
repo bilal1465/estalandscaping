@@ -46,7 +46,7 @@ export default function QuoteSection() {
             <Button 
               onClick={() => scrollToSection("contact")} 
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-forest"
+              className="border-2 border-white text-forest hover:bg-white hover:text-forest"
             >
               <Mail className="mr-2 h-4 w-4" />
               Request Quote Online
