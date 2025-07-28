@@ -26,8 +26,8 @@ export default function AboutSection() {
           </div>
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-              alt="STA Landscaping team at work" 
+              src="@assets/IMG_9048_1753669932336.JPG" 
+              alt="STA Landscaping professional work - beautiful front yard with concrete walkway" 
               className="rounded-xl shadow-lg w-full h-auto"
             />
             <div className="absolute -bottom-6 -right-6 bg-forest text-white p-6 rounded-xl shadow-lg">

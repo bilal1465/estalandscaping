@@ -14,7 +14,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&h=1200')`
+          backgroundImage: `url('@assets/IMG_8843_1753669932336.JPG')`
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
