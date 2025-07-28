@@ -38,7 +38,7 @@ export default function HeroSection() {
           <Button 
             onClick={() => scrollToSection("services")} 
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-forest text-lg px-8 py-6"
+            className="border-2 border-white text-forest hover:bg-white hover:text-forest text-lg px-8 py-6"
           >
             <Leaf className="mr-2 h-5 w-5" />
             View Services
