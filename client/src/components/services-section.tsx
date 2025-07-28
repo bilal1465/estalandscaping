@@ -12,7 +12,7 @@ const services = [
       "Weed control",
       "Seasonal treatments"
     ],
-    image: "/images/IMG_8843_1753669932336.JPG"
+    image: "/images/IMG_3628_1753672543845.JPG"
   },
   {
     icon: Palette,
@@ -36,7 +36,7 @@ const services = [
       "Expert installation",
       "Initial care guidance"
     ],
-    image: "/images/IMG_9100_1753669932337.JPG"
+    image: "/images/IMG_3465_1753672543843.JPG"
   },
   {
     icon: Mountain,
@@ -60,7 +60,7 @@ const services = [
       "Debris cleanup",
       "Garden bed preparation"
     ],
-    image: "/images/IMG_9427_1753669932337.JPG"
+    image: "/images/IMG_3867_1753672543846.JPG"
   },
   {
     icon: Compass,
@@ -72,7 +72,7 @@ const services = [
       "Water features",
       "Outdoor living spaces"
     ],
-    image: "/images/IMG_8843_1753669932336.JPG"
+    image: "/images/IMG_3754_1753672543846.JPG"
   }
 ];
 

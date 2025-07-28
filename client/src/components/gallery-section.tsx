@@ -1,26 +1,26 @@
 export default function GallerySection() {
   const beforeAfterProjects = [
     {
-      title: "Professional lawn striping and maintenance - Quality results you can see",
+      title: "Backyard transformation with professional lawn striping and retaining wall",
       before: "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "/images/IMG_8843_1753669932336.JPG"
+      after: "/images/IMG_3209_1753672543842.JPG"
     },
     {
-      title: "Front yard walkway and lawn installation - Clean, modern design",
+      title: "Modern front yard sod installation with clean edges and design",
       before: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "/images/IMG_9048_1753669932336.JPG"
+      after: "/images/IMG_3465_1753672543843.JPG"
     }
   ];
 
   const galleryImages = [
-    "/images/IMG_8843_1753669932336.JPG",
-    "/images/IMG_9048_1753669932336.JPG", 
-    "/images/IMG_9100_1753669932337.JPG",
-    "/images/IMG_9104_1753669932337.JPG",
-    "/images/IMG_9427_1753669932337.JPG",
-    "/images/IMG_8843_1753669932336.JPG",
-    "/images/IMG_9048_1753669932336.JPG",
-    "/images/IMG_9100_1753669932337.JPG"
+    "/images/IMG_3628_1753672543845.JPG",
+    "/images/IMG_3630_1753672543845.JPG", 
+    "/images/IMG_3631_1753672543845.JPG",
+    "/images/IMG_3868_1753672543846.JPG",
+    "/images/IMG_3869_1753672543846.JPG",
+    "/images/IMG_3209_1753672543842.JPG",
+    "/images/IMG_3465_1753672543843.JPG",
+    "/images/IMG_3754_1753672543846.JPG"
   ];
 
   return (
