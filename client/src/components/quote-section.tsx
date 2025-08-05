@@ -40,7 +40,7 @@ export default function QuoteSection() {
             <Button asChild className="bg-white text-forest hover:bg-white/90">
               <a href="tel:555-123-4567">
                 <Phone className="mr-2 h-4 w-4" />
-                Call Now: (555) 123-4567
+                Call Now: (825)-733-2708
               </a>
             </Button>
             <Button 

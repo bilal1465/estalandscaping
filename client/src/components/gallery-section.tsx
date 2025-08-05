@@ -3,24 +3,24 @@ export default function GallerySection() {
     {
       title: "Backyard transformation with professional lawn striping and retaining wall",
       before: "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "/images/IMG_3209_1753672543842.JPG"
+      after: "/images/image-34.jpg"
     },
     {
-      title: "Modern front yard sod installation with clean edges and design",
-      before: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "/images/IMG_3465_1753672543843.JPG"
+      title: "Modern back yard transformation with rocks and flower bed",
+      before: "/images/image-34.jpg",
+      after: "/images/image-35.jpg"
     }
   ];
 
   const galleryImages = [
-    "/images/IMG_3628_1753672543845.JPG",
-    "/images/IMG_3630_1753672543845.JPG", 
-    "/images/IMG_3631_1753672543845.JPG",
-    "/images/IMG_3868_1753672543846.JPG",
-    "/images/IMG_3869_1753672543846.JPG",
-    "/images/IMG_3209_1753672543842.JPG",
-    "/images/IMG_3465_1753672543843.JPG",
-    "/images/IMG_3754_1753672543846.JPG"
+    "/images/image-12.JPG",
+    "/images/image-03.JPG", 
+    "/images/image-17.jpg",
+    "/images/image-07.JPG",
+    "/images/image-09.JPG",
+    "/images/image-33.jpg",
+    "/images/image-05.JPG",
+    "/images/image-18.jpg"
   ];
 
   return (

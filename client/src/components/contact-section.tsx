@@ -78,46 +78,21 @@ export default function ContactSection() {
                     <Phone className="text-forest text-xl mr-4 h-6 w-6" />
                     <div>
                       <div className="font-medium">Phone</div>
-                      <div className="text-gray-600">(555) 123-4567</div>
+                      <div className="text-gray-600">(825)-733-2708</div>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <Mail className="text-forest text-xl mr-4 h-6 w-6" />
                     <div>
                       <div className="font-medium">Email</div>
-                      <div className="text-gray-600">info@stalandscaping.com</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="text-forest text-xl mr-4 h-6 w-6" />
-                    <div>
-                      <div className="font-medium">Address</div>
-                      <div className="text-gray-600">123 Garden Way, Green Valley, CA 95945</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="text-forest text-xl mr-4 h-6 w-6" />
-                    <div>
-                      <div className="font-medium">Business Hours</div>
-                      <div className="text-gray-600">Mon-Sat: 7AM-6PM | Sun: Closed</div>
+                      <div className="text-gray-600">contact.estalandscaping@gmail.com</div>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Google Maps Placeholder */}
-            <Card className="shadow-lg">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold text-forest font-serif mb-6">Find Us</h3>
-                <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
-                  <div className="text-center text-gray-600">
-                    <MapPin className="mx-auto mb-4 h-12 w-12" />
-                    <div>Interactive Map Coming Soon</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+
           </div>
 
           {/* Contact Form */}

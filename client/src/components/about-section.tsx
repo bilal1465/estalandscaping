@@ -26,7 +26,7 @@ export default function AboutSection() {
           </div>
           <div className="relative">
             <img 
-              src="/images/IMG_9048_1753669932336.JPG" 
+              src="/images/image-29.jpg" 
               alt="STA Landscaping professional work - beautiful front yard with concrete walkway" 
               className="rounded-xl shadow-lg w-full h-auto"
             />

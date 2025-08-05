@@ -107,20 +107,10 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <ul className="space-y-2 text-gray-300">
               <li className="flex items-center">
-                <span className="mr-2">📞</span>(555) 123-4567
+                <span className="mr-2">📞</span>(825)-733-2708
               </li>
               <li className="flex items-center">
-                <span className="mr-2">📧</span>info@stalandscaping.com
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 mt-1">📍</span>
-                <div>
-                  123 Garden Way<br />
-                  Green Valley, CA 95945
-                </div>
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">🕒</span>Mon-Sat: 7AM-6PM
+                <span className="mr-2">📧</span>contact.estalandscaping@gmail.com
               </li>
             </ul>
           </div>
