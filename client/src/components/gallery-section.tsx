@@ -2,11 +2,11 @@ export default function GallerySection() {
   const beforeAfterProjects = [
     {
       title: "Backyard transformation with professional lawn striping and retaining wall",
-      before: "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      after: "/images/image-34.jpg"
+      before: "/images/image-39.jpg",
+      after: "/images/image-40.jpg"
     },
     {
-      title: "Modern back yard transformation with rocks and flower bed",
+      title: "From patchy to lush our premium fertilization brings your lawn back to life with deep, lasting green",
       before: "/images/image-34.jpg",
       after: "/images/image-35.jpg"
     }
