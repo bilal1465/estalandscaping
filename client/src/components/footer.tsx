@@ -118,7 +118,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-600 mt-8 pt-8 text-center text-gray-300">
           <p>
-            &copy; 2024 STA Landscaping. All rights reserved. | 
+            &copy; 2025 STA Landscaping. All rights reserved. | 
             <a href="#" className="hover:text-white transition-colors duration-200 ml-1">Privacy Policy</a> | 
             <a href="#" className="hover:text-white transition-colors duration-200 ml-1">Terms of Service</a>
           </p>
