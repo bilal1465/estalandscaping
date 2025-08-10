@@ -5,7 +5,7 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">
-              About STA Landscaping
+              About ESTA Landscaping
             </h2>
             <p className="text-lg text-gray-700 mb-6">
               Founded with a passion for creating beautiful outdoor spaces, STA Landscaping has been transforming properties across the region for over a decade. Our family-owned business combines traditional craftsmanship with modern design principles.
@@ -15,11 +15,11 @@ export default function AboutSection() {
             </p>
             <div className="grid grid-cols-2 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-forest font-serif">10+</div>
+                <div className="text-3xl font-bold text-forest font-serif">3+</div>
                 <div className="text-gray-600">Years Experience</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-forest font-serif">500+</div>
+                <div className="text-3xl font-bold text-forest font-serif">150+</div>
                 <div className="text-gray-600">Projects Completed</div>
               </div>
             </div>

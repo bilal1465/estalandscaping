@@ -1,12 +1,12 @@
 export default function GallerySection() {
   const beforeAfterProjects = [
     {
-      title: "Backyard transformation with professional lawn striping and retaining wall",
+      title: "From patchy to lush our premium fertilization brings your lawn back to life with deep, lasting green",
       before: "/images/image-39.jpg",
       after: "/images/image-40.jpg"
     },
     {
-      title: "From patchy to lush our premium fertilization brings your lawn back to life with deep, lasting green",
+      title: "Backyard transformation with professional lawn striping and retaining wall",
       before: "/images/image-34.jpg",
       after: "/images/image-35.jpg"
     }
