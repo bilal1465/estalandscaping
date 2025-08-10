@@ -1,11 +1,14 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+// Determine API base URL
 const API_BASE =
   typeof window === "undefined"
-    ? process.env.VERCEL_URL
+    ? process.env.VERCEL_ENV === "production"
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : "http://localhost:3000"
-    : "";
+    : process.env.NEXT_PUBLIC_API_URL || "";
 
 // Throw if response not ok
 async function throwIfResNotOk(res: Response) {
