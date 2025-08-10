@@ -1,5 +1,13 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+const API_BASE =
+  typeof window === "undefined"
+    ? process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000"
+    : "";
+
+// Throw if response not ok
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -7,12 +15,13 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+// General API request function
 export async function apiRequest(
   method: string,
   url: string,
-  data?: unknown | undefined,
+  data?: unknown
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await fetch(`${API_BASE}${url}`, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
@@ -23,13 +32,15 @@ export async function apiRequest(
   return res;
 }
 
+// Handles GET queries
 type UnauthorizedBehavior = "returnNull" | "throw";
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const url = `${API_BASE}${queryKey.join("/")}`;
+    const res = await fetch(url, {
       credentials: "include",
     });
 
@@ -41,6 +52,7 @@ export const getQueryFn: <T>(options: {
     return await res.json();
   };
 
+// React Query client
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
