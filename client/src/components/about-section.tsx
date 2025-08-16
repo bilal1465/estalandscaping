@@ -8,7 +8,7 @@ export default function AboutSection() {
               About ESTA Landscaping
             </h2>
             <p className="text-lg text-gray-700 mb-6">
-              Founded with a passion for creating beautiful outdoor spaces, STA Landscaping has been transforming properties across the region for over a decade. Our family-owned business combines traditional craftsmanship with modern design principles.
+              Founded with a passion for creating beautiful outdoor spaces, ESTA Landscaping has been transforming properties across the region for over a decade. Our family-owned business combines traditional craftsmanship with modern design principles.
             </p>
             <p className="text-lg text-gray-700 mb-8">
               We believe that every property has potential, and our mission is to unlock that potential through thoughtful design, quality materials, and expert installation. From small garden beds to complete landscape transformations, we approach every project with the same level of care and attention to detail.
