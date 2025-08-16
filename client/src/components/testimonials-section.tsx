@@ -6,14 +6,14 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Homeowner",
     image: "https://images.unsplash.com/photo-1494790108755-2616b612c7e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-    content: "STA Landscaping transformed our backyard into a beautiful oasis. Their attention to detail and professionalism was outstanding. We couldn't be happier with the results!",
+    content: "ESTA Landscaping transformed our backyard into a beautiful oasis. Their attention to detail and professionalism was outstanding. We couldn't be happier with the results!",
     rating: 5
   },
   {
     name: "Michael Chen",
     role: "Business Owner", 
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-    content: "Professional, reliable, and creative. STA Landscaping has been maintaining our commercial property for 3 years. Their seasonal plantings always impress our customers.",
+    content: "Professional, reliable, and creative. ESTA Landscaping has been maintaining our commercial property for 3 years. Their seasonal plantings always impress our customers.",
     rating: 5
   },
   {
