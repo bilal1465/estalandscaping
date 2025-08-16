@@ -1,6 +1,6 @@
 // api/contact.ts
 import { randomUUID } from "crypto";
-import { insertContactRequestSchema } from "@shared/schema";
+import { insertContactRequestSchema } from "../shared/schema";
 import { z } from "zod";
 import sgMail from "@sendgrid/mail";
 
