@@ -85,7 +85,7 @@ export default function ContactSection() {
                     <Mail className="text-forest text-xl mr-4 h-6 w-6" />
                     <div>
                       <div className="font-medium">Email</div>
-                      <div className="text-gray-600">contact.estalandscaping@gmail.com</div>
+                      <div className="text-gray-600">noreply.estalandscaping@gmail.com</div>
                     </div>
                   </div>
                 </div>
