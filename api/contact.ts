@@ -17,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const msg = {
-      to: "contact.estalandscaping@gmail.com", // your business inbox
+      to: "info.estalandscaping@gmail.com", // your business inbox
       from: process.env.SENDGRID_FROM_EMAIL!, // must be a verified sender/domain
       subject: `New Contact Request from ${firstName} ${lastName}`,
       text: `
