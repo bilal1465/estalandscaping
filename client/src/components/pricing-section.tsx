@@ -13,15 +13,16 @@ const packages = [
     popular: false,
   },
   {
-    name: "Essential Care",
+    name: "Lawn Care",
     price: "$60",
     period: "/month",
-    description: "Perfect for basic maintenance",
+    description: "Bi-weekly service for those who need less frequent maintenance.",
     features: [
       "Bi-weekly lawn mowing",
-      "Edge trimming",
-      "Basic weed control",
-      "Seasonal cleanup (2x/year)",
+      "Edging of walkways and driveways",
+      "Trimming around obstacles",
+      "Blowing of clippings from hard surfaces",
+      "Flexible scheduling"
     ],
     popular: false,
   }
