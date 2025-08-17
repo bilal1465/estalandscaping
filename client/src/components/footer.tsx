@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <div className="text-2xl font-bold font-serif mb-4">STA Landscaping</div>
+            <div className="text-2xl font-bold font-serif mb-4">ESTA Landscaping</div>
             <p className="text-gray-300 mb-4">
               Creating beautiful outdoor spaces that enhance your property and lifestyle.
             </p>
@@ -20,7 +20,7 @@ export default function Footer() {
                 <span className="sr-only">Facebook</span>
                 <div className="w-6 h-6 bg-gray-300 rounded"></div>
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
+              <a href="https://www.instagram.com/esta_landscaping?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" className="text-gray-300 hover:text-white transition-colors duration-200">
                 <span className="sr-only">Instagram</span>
                 <div className="w-6 h-6 bg-gray-300 rounded"></div>
               </a>
