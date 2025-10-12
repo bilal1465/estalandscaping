@@ -110,7 +110,7 @@ export default function Footer() {
                 <span className="mr-2">📞</span>(825)-733-2708
               </li>
               <li className="flex items-center">
-                <span className="mr-2">📧</span>info.estalandingscaping@gmail.com
+                <span className="mr-2">📧</span>info.estalandscaping@gmail.com
               </li>
             </ul>
           </div>
