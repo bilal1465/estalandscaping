@@ -18,7 +18,6 @@ const testimonials = [
   {
     name: "Emily Rodriguez",
     role: "Property Manager",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
     content: "From design consultation to installation, the entire process was seamless. They listened to our vision and brought it to life beautifully. Highly recommend!",
     rating: 5
   }
