@@ -12,7 +12,6 @@ const testimonials = [
   {
     name: "Michael Chen",
     role: "Business Owner", 
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
     content: "Professional, reliable, and creative. ESTA Landscaping has been maintaining our commercial property for 3 years. Their seasonal plantings always impress our customers.",
     rating: 5
   },
