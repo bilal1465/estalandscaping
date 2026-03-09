@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import AnimateInView from "@/components/animate-in-view";
 
 const testimonials = [
   {
@@ -29,7 +30,7 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">
             What Our Clients Say
           </h2>
@@ -37,40 +38,42 @@ export default function TestimonialsSection() {
             Don't just take our word for it. Here's what our satisfied customers
             have to say about our landscaping services.
           </p>
-        </div>
+        </AnimateInView>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((t, idx) => (
-            <Card key={idx} className="bg-beige shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="flex text-yellow-400 text-lg">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-current" />
-                    ))}
+            <AnimateInView key={idx} stagger={(idx + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
+              <Card className="bg-beige shadow-lg h-full">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="flex text-yellow-400 text-lg">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" />
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <p className="text-gray-700 mb-4 italic">"{t.content}"</p>
+                  <p className="text-gray-700 mb-4 italic">"{t.content}"</p>
 
-                <div>
-                  <div className="font-semibold text-forest">{t.name}</div>
-                  <div className="text-gray-600 text-sm">{t.role}</div>
-                </div>
-              </CardContent>
-            </Card>
+                  <div>
+                    <div className="font-semibold text-forest">{t.name}</div>
+                    <div className="text-gray-600 text-sm">{t.role}</div>
+                  </div>
+                </CardContent>
+              </Card>
+            </AnimateInView>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <div className="inline-flex items-center bg-beige px-6 py-4 rounded-xl">
+        <AnimateInView className="text-center mt-12" stagger={4}>
+          <div className="inline-flex items-center bg-beige px-6 py-4 rounded-xl transition-transform duration-300 hover:scale-[1.02]">
             <div className="text-3xl text-red-500 mr-4">G</div>
             <div className="text-left">
               <div className="font-semibold text-forest">4.9/5 Stars on Google</div>
               <div className="text-gray-600 text-sm">Based on 50+ reviews</div>
             </div>
           </div>
-        </div>
+        </AnimateInView>
       </div>
     </section>
   );

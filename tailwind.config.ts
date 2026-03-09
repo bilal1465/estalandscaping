@@ -51,6 +51,10 @@ export default {
           "4": "var(--chart-4)",
           "5": "var(--chart-5)",
         },
+        forest: "var(--forest)",
+        beige: "var(--beige)",
+        brown: "var(--brown)",
+        "off-white": "var(--off-white)",
         sidebar: {
           DEFAULT: "var(--sidebar-background)",
           foreground: "var(--sidebar-foreground)",

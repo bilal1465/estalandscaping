@@ -1,14 +1,10 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
-// Determine API base URL
+// Determine API base URL (Vite uses import.meta.env; no process in browser)
+// In dev with no API server, use "" so the app still renders (API calls will 404 if used)
 const API_BASE =
-  typeof window === "undefined"
-    ? process.env.VERCEL_ENV === "production"
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000"
-    : process.env.NEXT_PUBLIC_API_URL || "";
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "" : "");
 
 // Throw if response not ok
 async function throwIfResNotOk(res: Response) {

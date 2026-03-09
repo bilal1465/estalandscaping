@@ -1,6 +1,7 @@
 import { Check, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import AnimateInView from "@/components/animate-in-view";
 
 const packages = [
   {
@@ -39,7 +40,7 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">
             Service Packages
           </h2>
@@ -48,48 +49,49 @@ export default function PricingSection() {
             packages include consultation and can be customized to your specific
             needs.
           </p>
-        </div>
+        </AnimateInView>
 
         <div className="grid md:grid-cols-2 gap-8">
           {packages.map((pkg, index) => (
-            <Card
-              key={index}
-              className={`relative shadow-lg hover:shadow-xl transition-shadow duration-300 ${
-                pkg.popular ? "border-2 border-forest" : ""
-              }`}
-            >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-forest text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-semibold text-forest font-serif mb-2">
-                    {pkg.name}
-                  </h3>
-                  <div className="text-4xl font-bold text-forest mb-2">
-                    Starting from {pkg.price}
-                    <span className="text-lg font-normal">{pkg.period}</span>
+            <AnimateInView key={index} stagger={index === 0 ? 1 : 2}>
+              <Card
+                className={`relative ${
+                  pkg.popular ? "border-2 border-forest" : ""
+                }`}
+              >
+                {pkg.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-forest text-white px-4 py-2 rounded-full text-sm font-semibold">
+                      Most Popular
+                    </span>
                   </div>
-                  <p className="text-gray-600">{pkg.description}</p>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="text-forest mr-3 h-4 w-4" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+                )}
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-semibold text-forest font-serif mb-2">
+                      {pkg.name}
+                    </h3>
+                    <div className="text-4xl font-bold text-forest mb-2">
+                      Starting from {pkg.price}
+                      <span className="text-lg font-normal">{pkg.period}</span>
+                    </div>
+                    <p className="text-gray-600">{pkg.description}</p>
+                  </div>
+                  <ul className="space-y-3 mb-8">
+                    {pkg.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center">
+                        <Check className="text-forest mr-3 h-4 w-4" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </AnimateInView>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <AnimateInView className="text-center mt-12" stagger={3}>
           <p className="text-lg text-gray-700 mb-6">
             Need something custom? We create tailored solutions for unique
             properties.
@@ -101,7 +103,7 @@ export default function PricingSection() {
             <Calculator className="mr-2 h-4 w-4" />
             Get Custom Quote
           </Button>
-        </div>
+        </AnimateInView>
       </div>
     </section>
   );

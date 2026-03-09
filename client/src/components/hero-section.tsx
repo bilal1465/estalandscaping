@@ -10,14 +10,14 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center">
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div 
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-500 ease-out"
         style={{
           backgroundImage: `url('/images/image-36.JPG')`
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-40" />
       </div>
       
       <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
@@ -30,7 +30,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             onClick={() => scrollToSection("quote")} 
-            className="bg-forest text-white hover:bg-forest/90 text-lg px-8 py-6"
+            className="bg-forest text-white hover:bg-forest/90 hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-300 ease-out"
           >
             <Calculator className="mr-2 h-5 w-5" />
             Get Free Quote
@@ -38,7 +38,7 @@ export default function HeroSection() {
           <Button 
             onClick={() => scrollToSection("services")} 
             variant="outline"
-            className="border-2 border-white text-forest hover:bg-white hover:text-forest text-lg px-8 py-6"
+            className="border-2 border-white text-forest hover:bg-white hover:text-forest hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-300 ease-out"
           >
             <Leaf className="mr-2 h-5 w-5" />
             View Services
