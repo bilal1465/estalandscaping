@@ -28,12 +28,10 @@ export default function IntroAnimation({ onComplete }: Props) {
       const tl = gsap.timeline({
         onComplete: () => {
           markIntroSeen();
-          // Blur/fade transition out
           gsap.to(containerRef.current, {
-            duration: 0.6,
+            duration: 0.35,
             opacity: 0,
-            filter: "blur(12px)",
-            ease: "power2.inOut",
+            ease: "power2.in",
             onComplete,
           });
         },
@@ -85,8 +83,8 @@ export default function IntroAnimation({ onComplete }: Props) {
         ease: "power1.inOut",
       }, 1.6);
 
-      // Hold then transition out starts at ~2.4s
-      tl.to({}, { duration: 0.5 }, 2.2);
+      // Hold then transition out
+      tl.to({}, { duration: 0.35 }, 2.0);
     }, containerRef);
 
     return () => ctx.revert();

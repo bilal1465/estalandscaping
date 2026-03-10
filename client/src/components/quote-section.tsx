@@ -1,12 +1,19 @@
 import { CalendarCheck, Ruler, FileText, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateInView from "@/components/animate-in-view";
+import { useLenisRef } from "@/contexts/lenis-context";
 
 export default function QuoteSection() {
+  const lenisRef = useLenisRef();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (lenisRef?.current) {
+        lenisRef.current.scrollTo(element, { offset: -80 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -55,7 +62,7 @@ export default function QuoteSection() {
             <Button 
               onClick={() => scrollToSection("contact")} 
               variant="outline"
-              className="border-2 border-white text-forest hover:bg-white hover:text-forest transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="border-2 border-white text-white hover:bg-white hover:text-forest transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               <Mail className="mr-2 h-4 w-4" />
               Request Quote Online

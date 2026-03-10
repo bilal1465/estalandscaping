@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 
 type HoverState = "default" | "link" | "nav" | "button";
 
@@ -14,12 +13,22 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const pos = useRef({ x: 0, y: 0 });
   const target = useRef({ x: 0, y: 0 });
+  const scaleRef = useRef(1);
+  const currentScaleRef = useRef(1);
+  const opacityRef = useRef(0.22);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)");
     const isDesktop = finePointer.matches;
     setIsVisible(isDesktop);
   }, []);
+
+  useEffect(() => {
+    scaleRef.current =
+      hoverState === "nav" ? 2.1 : hoverState === "button" ? 1.75 : hoverState === "link" ? 1.5 : 1;
+    opacityRef.current = hoverState === "default" ? 0.22 : 0.32;
+  }, [hoverState]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -53,46 +62,29 @@ export default function CustomCursor() {
 
     const onLeave = () => setHoverState("default");
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onLeave);
 
     const tick = () => {
-      pos.current.x += (target.current.x - pos.current.x) * 0.2;
-      pos.current.y += (target.current.y - pos.current.y) * 0.2;
-      gsap.set(cursor, {
-        x: pos.current.x,
-        y: pos.current.y,
-        xPercent: -50,
-        yPercent: -50,
-      });
-      requestAnimationFrame(tick);
+      pos.current.x += (target.current.x - pos.current.x) * 0.22;
+      pos.current.y += (target.current.y - pos.current.y) * 0.22;
+      currentScaleRef.current += (scaleRef.current - currentScaleRef.current) * 0.18;
+      const s = currentScaleRef.current;
+      const o = opacityRef.current;
+      cursor.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%) scale(${s})`;
+      cursor.style.opacity = String(o);
+      rafId.current = requestAnimationFrame(tick);
     };
-    tick();
+    rafId.current = requestAnimationFrame(tick);
 
     return () => {
+      cancelAnimationFrame(rafId.current);
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onLeave);
     };
   }, [isVisible]);
-
-  useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor || !isVisible) return;
-
-    const scale =
-      hoverState === "nav" ? 2.1 : hoverState === "button" ? 1.75 : hoverState === "link" ? 1.5 : 1;
-    const opacity = hoverState === "default" ? 0.22 : 0.32;
-
-    gsap.to(cursor, {
-      scale,
-      opacity,
-      duration: 0.32,
-      ease: "power2.out",
-      overwrite: true,
-    });
-  }, [hoverState, isVisible]);
 
   if (!isVisible) return null;
 
@@ -100,7 +92,7 @@ export default function CustomCursor() {
     <div
       ref={cursorRef}
       className="pointer-events-none fixed left-0 top-0 z-[9999] h-6 w-6 rounded-full border-2 border-forest bg-transparent will-change-transform"
-      style={{ opacity: 0.22 }}
+      style={{ opacity: 0.22, transition: "opacity 0.2s ease-out" }}
       aria-hidden="true"
     />
   );

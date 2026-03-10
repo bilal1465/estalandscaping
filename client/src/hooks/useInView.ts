@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 const options: IntersectionObserverInit = {
   root: null,
-  rootMargin: "0px 0px -8% 0px",
-  threshold: 0.1,
+  rootMargin: "0px 0px -6% 0px",
+  threshold: 0.08,
 };
 
 /**

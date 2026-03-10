@@ -22,3 +22,20 @@ export const insertContactRequestSchema = createInsertSchema(contactRequests).om
 
 export type InsertContactRequest = z.infer<typeof insertContactRequestSchema>;
 export type ContactRequest = typeof contactRequests.$inferSelect;
+
+// Quote request payload (multi-step form + optional fields for email)
+export const quoteRequestSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Valid email is required"),
+  phone: z.string().min(1, "Phone is required"),
+  service: z.string().min(1, "Please select a service"),
+  propertySize: z.string().optional(),
+  propertyType: z.string().optional(),
+  timeline: z.string().optional(),
+  message: z.string().min(10, "Please describe your project (at least 10 characters)"),
+  address: z.string().optional(),
+  budgetRange: z.string().optional(),
+});
+
+export type QuoteRequest = z.infer<typeof quoteRequestSchema>;

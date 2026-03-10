@@ -37,7 +37,7 @@ export default function Navigation() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ease-out ${scrolled ? "bg-off-white/95 shadow-lg backdrop-blur-md" : "bg-off-white shadow-sm"}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 ease-out ${scrolled ? "bg-off-white/95 shadow-lg backdrop-blur-sm" : "bg-off-white shadow-sm"}`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2">
           <div className="flex items-center">

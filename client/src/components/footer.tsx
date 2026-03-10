@@ -1,8 +1,16 @@
+import { useLenisRef } from "@/contexts/lenis-context";
+
 export default function Footer() {
+  const lenisRef = useLenisRef();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (lenisRef?.current) {
+        lenisRef.current.scrollTo(element, { offset: -80 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

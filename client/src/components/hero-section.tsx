@@ -1,21 +1,30 @@
 import { Calculator, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLenisRef } from "@/contexts/lenis-context";
 
 export default function HeroSection() {
+  const lenisRef = useLenisRef();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (lenisRef?.current) {
+        lenisRef.current.scrollTo(element, { offset: -80 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-500 ease-out"
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/images/image-36.JPG')`
         }}
+        role="img"
+        aria-label="Landscaping background"
       >
         <div className="absolute inset-0 bg-black bg-opacity-40" />
       </div>

@@ -2,6 +2,7 @@ import { Check, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimateInView from "@/components/animate-in-view";
+import { useLenisRef } from "@/contexts/lenis-context";
 
 const packages = [
   {
@@ -30,10 +31,16 @@ const packages = [
 ];
 
 export default function PricingSection() {
+  const lenisRef = useLenisRef();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (lenisRef?.current) {
+        lenisRef.current.scrollTo(element, { offset: -80 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
