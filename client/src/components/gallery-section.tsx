@@ -1,17 +1,20 @@
 import AnimateInView from "@/components/animate-in-view";
+import { BeforeAfterCard } from "@/components/before-after-card";
 
 export default function GallerySection() {
   const beforeAfterProjects = [
     {
-      title: "From patchy to lush our premium fertilization brings your lawn back to life with deep, lasting green",
+      title: "Lawn transformation",
+      subtitle: "From patchy to lush — premium fertilization for deep, lasting green.",
       before: "/images/image-39.jpg",
-      after: "/images/image-40.jpg"
+      after: "/images/image-40.jpg",
     },
     {
-      title: "Backyard transformation with professional lawn striping and retaining wall",
+      title: "Backyard transformation",
+      subtitle: "Professional lawn striping and retaining wall installation.",
       before: "/images/image-34.jpg",
-      after: "/images/image-35.jpg"
-    }
+      after: "/images/image-35.jpg",
+    },
   ];
 
   const galleryImages = [
@@ -35,36 +38,20 @@ export default function GallerySection() {
           </p>
         </AnimateInView>
 
-        {/* Before/After Showcase */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        {/* Before & After — premium portfolio cards */}
+        <AnimateInView className="mb-10">
+          <h3 className="text-2xl font-semibold text-forest font-serif text-center mb-2">Before & After</h3>
+          <p className="text-center text-gray-500 max-w-xl mx-auto text-sm">See the difference our work makes.</p>
+        </AnimateInView>
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12 mb-16">
           {beforeAfterProjects.map((project, index) => (
-            <AnimateInView key={index} stagger={index === 0 ? 1 : 2}>
-              <div className="bg-beige rounded-xl p-6 transition-shadow duration-300 hover:shadow-lg">
-                <h3 className="text-2xl font-semibold text-forest font-serif mb-6 text-center">Before & After</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium text-gray-700 mb-2">Before</h4>
-                    <img 
-                      src={project.before} 
-                      alt="Before landscaping transformation" 
-                      className="rounded-lg w-full h-40 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-700 mb-2">After</h4>
-                    <img 
-                      src={project.after} 
-                      alt="After landscaping transformation" 
-                      className="rounded-lg w-full h-40 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-                <p className="text-center text-gray-600 mt-4 italic">"{project.title}"</p>
-              </div>
+            <AnimateInView key={index} stagger={(index + 1) as 1 | 2}>
+              <BeforeAfterCard
+                before={project.before}
+                after={project.after}
+                title={project.title}
+                subtitle={project.subtitle}
+              />
             </AnimateInView>
           ))}
         </div>
