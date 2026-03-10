@@ -100,13 +100,25 @@ export default function IntroAnimation({ onComplete }: Props) {
     >
       <div ref={overlayRef} className="absolute inset-0" />
       <div className="relative flex flex-col items-center justify-center">
-        {/* ESTA — revealed with clip-path */}
-        <div
-          ref={estaRef}
-          className="overflow-hidden font-serif text-5xl font-bold tracking-tight text-forest sm:text-6xl md:text-7xl"
-          style={{ clipPath: "inset(0 100% 0 0)" }}
-        >
-          ESTA
+        {/* ESTA + leaf row: leaf sits to the right with spacing */}
+        <div className="flex flex-row items-center justify-center">
+          {/* ESTA — revealed with clip-path */}
+          <div
+            ref={estaRef}
+            className="overflow-hidden font-serif text-5xl font-bold tracking-tight text-forest sm:text-6xl md:text-7xl"
+            style={{ clipPath: "inset(0 100% 0 0)" }}
+          >
+            ESTA
+          </div>
+          {/* Leaf — 16px gap from A, same vertical alignment */}
+          <div
+            ref={leafRef}
+            className="ml-4 shrink-0 text-forest/60 sm:ml-5"
+            style={{ opacity: 0 }}
+            aria-hidden="true"
+          >
+            <Leaf className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={1.5} />
+          </div>
         </div>
         {/* ESTA Landscaping — fades in below */}
         <div
@@ -115,15 +127,6 @@ export default function IntroAnimation({ onComplete }: Props) {
           style={{ opacity: 0 }}
         >
           Landscaping
-        </div>
-        {/* Leaf / nature element */}
-        <div
-          ref={leafRef}
-          className="absolute -right-4 top-1/2 mt-2 -translate-y-1/2 text-forest/60 sm:-right-6"
-          style={{ opacity: 0 }}
-          aria-hidden="true"
-        >
-          <Leaf className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={1.5} />
         </div>
       </div>
     </div>
