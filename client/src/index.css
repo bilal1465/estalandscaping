@@ -24,18 +24,20 @@
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
 
-  /* Custom STA Landscaping Colors */
+  /* ESTA Landscaping theme colors */
   --forest: hsl(120, 37%, 26%);
   --beige: hsl(43, 23%, 89%);
   --brown: hsl(25, 47%, 28%);
   --off-white: hsl(60, 22%, 98%);
 
-  /* Premium motion: GPU-friendly, ease-in-out feel */
+  /* Premium motion: consistent, subtle, GPU-friendly */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 180ms;
-  --duration-normal: 260ms;
-  --duration-slow: 320ms;
+  --ease-out-smooth: cubic-bezier(0.33, 1, 0.68, 1);
+  --duration-fast: 160ms;
+  --duration-normal: 220ms;
+  --duration-slow: 280ms;
+  --duration-modal: 240ms;
 }
 
 .dark {
@@ -75,11 +77,14 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 
-  /* Smooth transitions on interactive elements (GPU-friendly: transform + opacity) */
+  /* Smooth transitions on interactive elements */
   a, button {
-    transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+    transition-property: color, background-color, border-color, opacity, transform;
     transition-duration: var(--duration-normal);
     transition-timing-function: var(--ease-in-out-smooth);
+  }
+  a:focus-visible, button:focus-visible {
+    transition-duration: var(--duration-fast);
   }
 
   /* Reduce motion for users who prefer it */
@@ -168,40 +173,49 @@
     color: var(--off-white);
   }
 
-  /* Scroll-in animation: fade + slide up (GPU-accelerated) */
+  /* Scroll-in: subtle fade + slide (premium, consistent timing) */
   .animate-in-view {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(14px);
     transition:
       opacity var(--duration-slow) var(--ease-out-expo),
       transform var(--duration-slow) var(--ease-out-expo);
-    will-change: opacity, transform;
   }
 
   .animate-in-view.is-visible {
     opacity: 1;
     transform: translateY(0);
-    will-change: auto;
   }
 
-  /* Stagger children */
+  /* Stagger: tighter cascade for a polished feel */
   .animate-in-view.stagger-1 { transition-delay: 0ms; }
-  .animate-in-view.stagger-2 { transition-delay: 50ms; }
-  .animate-in-view.stagger-3 { transition-delay: 100ms; }
-  .animate-in-view.stagger-4 { transition-delay: 150ms; }
-  .animate-in-view.stagger-5 { transition-delay: 200ms; }
-  .animate-in-view.stagger-6 { transition-delay: 250ms; }
+  .animate-in-view.stagger-2 { transition-delay: 45ms; }
+  .animate-in-view.stagger-3 { transition-delay: 90ms; }
+  .animate-in-view.stagger-4 { transition-delay: 135ms; }
+  .animate-in-view.stagger-5 { transition-delay: 180ms; }
+  .animate-in-view.stagger-6 { transition-delay: 225ms; }
 
-  /* Nav link: underline slides in from left to right (premium) */
+  /* Nav link: underline (snappy, consistent with --duration-normal) */
   .nav-link-underline {
-    @apply relative text-gray-700 hover:text-forest transition-colors duration-300 ease-out;
+    @apply relative text-gray-700 hover:text-forest;
+    transition: color var(--duration-normal) var(--ease-in-out-smooth);
   }
   .nav-link-underline::after {
     content: "";
     @apply absolute left-0 right-0 bottom-0 h-px bg-forest origin-left scale-x-0;
-    transition: transform var(--duration-normal) var(--ease-in-out-smooth);
+    transition: transform var(--duration-normal) var(--ease-out-expo);
   }
   .nav-link-underline:hover::after {
     @apply scale-x-100;
+  }
+
+  /* Modal/lightbox: calm open/close (consistent with --duration-modal) */
+  .modal-overlay-transition {
+    transition-duration: var(--duration-modal);
+    transition-timing-function: var(--ease-out-expo);
+  }
+  .modal-content-transition {
+    transition-duration: var(--duration-modal);
+    transition-timing-function: var(--ease-out-expo);
   }
 }

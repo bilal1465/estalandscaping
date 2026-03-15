@@ -66,7 +66,9 @@ export default function CustomCursor() {
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onLeave);
 
+    let running = true;
     const tick = () => {
+      if (!running) return;
       pos.current.x += (target.current.x - pos.current.x) * 0.22;
       pos.current.y += (target.current.y - pos.current.y) * 0.22;
       currentScaleRef.current += (scaleRef.current - currentScaleRef.current) * 0.18;
@@ -78,8 +80,16 @@ export default function CustomCursor() {
     };
     rafId.current = requestAnimationFrame(tick);
 
+    const onVisibilityChange = () => {
+      running = document.visibilityState === "visible";
+      if (running) rafId.current = requestAnimationFrame(tick);
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
+      running = false;
       cancelAnimationFrame(rafId.current);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onLeave);

@@ -7,7 +7,6 @@ import GallerySection from "@/components/gallery-section";
 import PricingSection from "@/components/pricing-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import QuoteRequestSection from "@/components/quote-request-section";
-import QuoteSection from "@/components/quote-section";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -22,7 +21,6 @@ export default function Home() {
       <PricingSection />
       <TestimonialsSection />
       <QuoteRequestSection />
-      <QuoteSection />
       <Footer />
     </div>
   );

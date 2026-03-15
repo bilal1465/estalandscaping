@@ -38,8 +38,8 @@ export default function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
-            onClick={() => scrollToSection("quote")} 
-            className="bg-forest text-white hover:bg-forest/90 hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-300 ease-out"
+            onClick={() => scrollToSection("contact")} 
+            className="bg-forest text-white hover:bg-forest/90 hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-200 ease-out"
           >
             <Calculator className="mr-2 h-5 w-5" />
             Get Free Quote
@@ -47,7 +47,7 @@ export default function HeroSection() {
           <Button 
             onClick={() => scrollToSection("services")} 
             variant="outline"
-            className="border-2 border-white text-forest hover:bg-white hover:text-forest hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-300 ease-out"
+            className="border-2 border-white text-forest hover:bg-white hover:text-forest hover:scale-[1.02] active:scale-[0.98] text-lg px-8 py-6 transition-transform duration-200 ease-out"
           >
             <Leaf className="mr-2 h-5 w-5" />
             View Services

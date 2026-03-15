@@ -1,7 +1,12 @@
+import { useState } from "react";
 import AnimateInView from "@/components/animate-in-view";
 import { BeforeAfterCard } from "@/components/before-after-card";
+import { ImageLightbox } from "@/components/image-lightbox";
 
 export default function GallerySection() {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
   const beforeAfterProjects = [
     {
       title: "Lawn transformation",
@@ -19,14 +24,16 @@ export default function GallerySection() {
 
   const galleryImages = [
     "/images/image-12.JPG",
-    "/images/image-03.JPG", 
+    "/images/image-03.JPG",
     "/images/image-17.jpg",
     "/images/image-07.JPG",
     "/images/image-09.JPG",
     "/images/image-33.jpg",
     "/images/image-05.JPG",
-    "/images/image-18.jpg"
+    "/images/image-18.jpg",
   ];
+
+  const galleryAlts = galleryImages.map((_, i) => `Landscaping project ${i + 1}`);
 
   return (
     <section id="gallery" className="py-20 bg-white">
@@ -56,20 +63,45 @@ export default function GallerySection() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid — same layout, click to enlarge */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (
             <AnimateInView key={index} stagger={((index % 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
-              <img 
-                src={image} 
-                alt={`Landscaping project ${index + 1}`} 
-                className="rounded-lg shadow-lg w-full h-48 object-cover transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
-                loading="lazy"
-                decoding="async"
-              />
+              <button
+                type="button"
+                onClick={() => {
+                  setLightboxIndex(index);
+                  setLightboxOpen(true);
+                }}
+                className="group relative block w-full cursor-pointer overflow-hidden rounded-lg shadow-lg transition-[transform,box-shadow] duration-200 ease-out hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
+                aria-label={`View full size: ${galleryAlts[index]}`}
+              >
+                <img
+                  src={image}
+                  alt={galleryAlts[index]}
+                  width={400}
+                  height={192}
+                  className="h-48 w-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.04]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span
+                  className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+                  aria-hidden
+                />
+              </button>
             </AnimateInView>
           ))}
         </div>
+
+        <ImageLightbox
+          images={galleryImages}
+          currentIndex={lightboxIndex}
+          open={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          onIndexChange={setLightboxIndex}
+          altTexts={galleryAlts}
+        />
       </div>
     </section>
   );

@@ -10,19 +10,40 @@ export default function Navigation() {
   const lenisRef = useLenisRef();
 
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 100);
-          ticking = false;
-        });
-        ticking = true;
+    const threshold = 100;
+    const throttleMs = 120;
+    let lastY = -1;
+    let lastTime = 0;
+    let rafId: number = 0;
+
+    const updateScrolled = () => {
+      const y = window.scrollY ?? document.documentElement.scrollTop;
+      const now = Date.now();
+      if (now - lastTime < throttleMs && lastY >= 0) return;
+      lastTime = now;
+      lastY = y;
+      setScrolled(y > threshold);
+    };
+
+    const onScroll = () => {
+      rafId = requestAnimationFrame(updateScrolled);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const lenis = lenisRef?.current;
+    if (lenis && typeof (lenis as { on?: (e: string, cb: () => void) => void }).on === "function") {
+      (lenis as { on: (e: string, cb: () => void) => void }).on("scroll", onScroll);
+    }
+    updateScrolled();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+      if (lenis && typeof (lenis as { off?: (e: string, cb: () => void) => void }).off === "function") {
+        (lenis as { off: (e: string, cb: () => void) => void }).off("scroll", onScroll);
       }
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lenisRef]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -37,14 +58,14 @@ export default function Navigation() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ease-out ${scrolled ? "bg-off-white/95 shadow-lg backdrop-blur-sm" : "bg-off-white shadow-sm"}`}>
+    <header className={`sticky top-0 z-50 transition-colors duration-200 ease-out ${scrolled ? "bg-off-white shadow-md" : "bg-off-white shadow-sm"}`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2">
           <div className="flex items-center">
-            <img src={logo} alt="Company Logo" className="h-8 w-auto max-h-[32px]" loading="eager" decoding="async" />
+            <img src={logo} alt="ESTA Landscaping" className="h-[60px] w-auto object-contain" loading="eager" decoding="async" />
           </div>
           
-          <div className="hidden md:flex items-center space-x-5 text-sm">
+          <div className="hidden md:flex items-center gap-5 text-sm">
             <button onClick={() => scrollToSection("home")} className="nav-link-underline py-1.5 pb-0.5">
               Home
             </button>
@@ -66,10 +87,19 @@ export default function Navigation() {
             <button onClick={() => scrollToSection("contact")} className="nav-link-underline py-1.5 pb-0.5">
               Contact
             </button>
+            <a
+              href="https://icehouseyyc.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 rounded-full border-2 border-sky-300 bg-white px-4 py-1.5 text-sm font-medium text-sky-600 transition-colors hover:border-sky-400 hover:bg-sky-50 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-300 focus:ring-offset-2"
+              aria-label="Switch to Snow Removal service (opens IceHouseYYC in new tab)"
+            >
+              ❄️ Snow Removal ⇄
+            </a>
           </div>
-          
+
           <div className="hidden md:block">
-            <Button onClick={() => scrollToSection("quote")} size="sm" className="bg-forest text-white hover:bg-forest/90 text-sm h-8 px-4">
+            <Button onClick={() => scrollToSection("contact")} size="sm" className="bg-forest text-white hover:bg-forest/90 text-sm h-8 px-4">
               Get Free Quote
             </Button>
           </div>
@@ -111,7 +141,16 @@ export default function Navigation() {
               <button onClick={() => scrollToSection("contact")} className="nav-link-underline text-left py-2">
                 Contact
               </button>
-              <Button onClick={() => scrollToSection("quote")} className="bg-forest text-white hover:bg-forest/90 w-full">
+              <a
+                href="https://icehouseyyc.ca/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border-2 border-sky-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-sky-600 transition-colors hover:border-sky-400 hover:bg-sky-50 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-300 focus:ring-offset-2"
+                aria-label="Switch to Snow Removal service (opens IceHouseYYC in new tab)"
+              >
+                ❄️ Snow Removal ⇄
+              </a>
+              <Button onClick={() => scrollToSection("contact")} className="bg-forest text-white hover:bg-forest/90 w-full">
                 Get Free Quote
               </Button>
             </div>
