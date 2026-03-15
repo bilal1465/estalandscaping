@@ -74,29 +74,62 @@ const PROPERTY_TYPES = [
 
 async function submitQuoteRequest(data: QuoteRequest): Promise<{ success: boolean; error?: string }> {
   const base = import.meta.env.VITE_API_URL || "";
-  const res = await fetch(`${base}/api/quote`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      service: data.service,
-      propertySize: data.propertySize || "",
-      message: data.message,
-      propertyType: data.propertyType || "",
-      timeline: data.timeline || "",
-      address: data.address || "",
-      budgetRange: data.budgetRange || "",
-    }),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    const body = err as { error?: string; message?: string };
-    return { success: false, error: body.message ?? body.error ?? "Something went wrong." };
+  const payload = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    phone: data.phone,
+    service: data.service,
+    propertySize: data.propertySize || "",
+    message: data.message,
+    propertyType: data.propertyType || "",
+    timeline: data.timeline || "",
+    address: data.address || "",
+    budgetRange: data.budgetRange || "",
+  };
+
+  const tryEndpoint = async (url: string): Promise<{ success: boolean; error?: string; status?: number }> => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const text = await res.text();
+    let body: { message?: string; error?: string } = {};
+    try {
+      body = text ? JSON.parse(text) : {};
+    } catch {
+      if (!res.ok) {
+        return {
+          success: false,
+          status: res.status,
+          error:
+            res.status === 404
+              ? "Quote form is temporarily unavailable. Please call or email us directly."
+              : "Something went wrong. Please try again or contact us directly.",
+        };
+      }
+    }
+    if (!res.ok) {
+      const msg = body.message ?? body.error ?? (res.status >= 500 ? "Server error. Please try again or contact us directly." : "Something went wrong.");
+      return { success: false, status: res.status, error: msg };
+    }
+    return { success: true };
+  };
+
+  try {
+    // Try /api/contact first (Gmail API), then /api/quote as fallback
+    let result = await tryEndpoint(`${base}/api/contact`);
+    if (!result.success && result.status === 404) {
+      result = await tryEndpoint(`${base}/api/quote`);
+    }
+    return { success: result.success, error: result.error };
+  } catch (_err) {
+    return {
+      success: false,
+      error: "Unable to connect. Please check your connection and try again, or contact us directly by phone or email.",
+    };
   }
-  return { success: true };
 }
 
 export default function QuoteRequestSection() {
@@ -150,19 +183,19 @@ export default function QuoteRequestSection() {
     }
   };
 
-  // Success state
+  // Success state — green success message
   if (submitStatus === "success") {
     return (
       <section id="contact" className="py-20 bg-beige">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimateInView>
-            <div className="rounded-2xl bg-white p-10 shadow-lg">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forest/10">
-                <Check className="h-8 w-8 text-forest" />
+            <div className="rounded-2xl bg-white p-10 shadow-lg border-2 border-green-200">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                <Check className="h-8 w-8 text-green-600" />
               </div>
-              <h2 className="text-2xl font-semibold text-forest font-serif mb-3">Thank you</h2>
+              <h2 className="text-2xl font-semibold text-green-800 font-serif mb-3">Message sent</h2>
               <p className="text-gray-600 mb-8">
-                Your request has been received. Our team will review your project details and get back to you shortly.
+                Your request has been received and sent to info@estalandscaping.com. Our team will get back to you shortly.
               </p>
               <Button
                 onClick={() => window.location.href = "#home"}

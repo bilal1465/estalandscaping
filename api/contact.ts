@@ -1,8 +1,11 @@
-// Vercel serverless: /api/contact
+// Vercel serverless: POST /api/contact — contact/quote form via Gmail API (OAuth2)
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import sgMail from "@sendgrid/mail";
+import { google } from "googleapis";
 
-const BUSINESS_EMAIL = "info.estalandscaping@gmail.com";
+const DEFAULT_EMAIL = "info@estalandscaping.com";
+function getToEmail() {
+  return process.env.GMAIL_EMAIL || DEFAULT_EMAIL;
+}
 
 function escapeHtml(s: string): string {
   if (!s) return "";
@@ -11,6 +14,14 @@ function escapeHtml(s: string): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function base64UrlEncode(str: string): string {
+  return Buffer.from(str, "utf8")
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -23,16 +34,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
-  const apiKey = process.env.SENDGRID_API_KEY;
-  const fromEmail = process.env.SENDGRID_FROM_EMAIL;
+  const clientId = process.env.GMAIL_CLIENT_ID;
+  const clientSecret = process.env.GMAIL_CLIENT_SECRET;
+  const refreshToken = process.env.GMAIL_REFRESH_TOKEN;
+  const redirectUri = process.env.GMAIL_REDIRECT_URI || "https://developers.google.com/oauthplayground";
 
-  if (!apiKey || !fromEmail) {
-    console.error("Missing SENDGRID_API_KEY or SENDGRID_FROM_EMAIL");
+  if (!clientId || !clientSecret || !refreshToken) {
+    const missing = [];
+    if (!clientId) missing.push("GMAIL_CLIENT_ID");
+    if (!clientSecret) missing.push("GMAIL_CLIENT_SECRET");
+    if (!refreshToken) missing.push("GMAIL_REFRESH_TOKEN");
+    console.error("Missing:", missing.join(", "));
     return res.status(500).json({
-      error: "Email service is not configured. Please try again later or contact us directly.",
+      success: false,
+      message:
+        "Email is not set up yet. Missing: " +
+        missing.join(", ") +
+        ". Get your refresh token by visiting /api/auth/gmail (sign in with info@estalandscaping.com), then add GMAIL_REFRESH_TOKEN in Vercel → Settings → Environment Variables and redeploy.",
     });
   }
 
@@ -53,47 +74,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     } = body || {};
 
     if (!firstName?.trim() || !lastName?.trim()) {
-      return res.status(400).json({ error: "First name and last name are required." });
+      return res.status(400).json({ success: false, message: "First name and last name are required." });
     }
     if (!email?.trim()) {
-      return res.status(400).json({ error: "Email is required." });
+      return res.status(400).json({ success: false, message: "Email is required." });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(String(email).trim())) {
-      return res.status(400).json({ error: "Please enter a valid email address." });
+      return res.status(400).json({ success: false, message: "Please enter a valid email address." });
     }
     if (!phone?.trim()) {
-      return res.status(400).json({ error: "Phone number is required." });
+      return res.status(400).json({ success: false, message: "Phone number is required." });
     }
-    if (!service?.trim()) {
-      return res.status(400).json({ error: "Please select a service." });
+    const serviceVal = (service ?? "").toString().trim();
+    if (!serviceVal) {
+      return res.status(400).json({ success: false, message: "Please select a service." });
     }
-    if (!message?.trim()) {
-      return res.status(400).json({ error: "Please describe your project." });
+    const projectDetails = String(message ?? "").trim();
+    if (!projectDetails) {
+      return res.status(400).json({ success: false, message: "Please describe your project." });
     }
-    if (String(message).trim().length < 10) {
-      return res.status(400).json({ error: "Project description should be at least 10 characters." });
+    if (projectDetails.length < 10) {
+      return res.status(400).json({ success: false, message: "Project description should be at least 10 characters." });
     }
 
-    sgMail.setApiKey(apiKey);
-
-    const serviceLabel =
-      {
-        "lawn-care": "Lawn Care & Maintenance",
-        "sod-installation": "Sod Installation",
-        mulching: "Mulching",
-        "seasonal-cleanup": "Seasonal Clean-Up",
-        "garden-design": "Garden Bed Design",
-        "custom-landscaping": "Custom Landscaping",
-      }[String(service)] || service;
+    const serviceLabel: Record<string, string> = {
+      "lawn-care": "Lawn Care & Maintenance",
+      "sod-installation": "Sod Installation",
+      mulching: "Mulching",
+      "seasonal-cleanup": "Seasonal Clean-Up",
+      "garden-design": "Garden Bed Design",
+      "custom-landscaping": "Custom Landscaping",
+    };
+    const serviceName = serviceLabel[serviceVal] || serviceVal;
 
     const submittedAt = new Date().toLocaleString("en-CA", {
       timeZone: "America/Edmonton",
       dateStyle: "medium",
       timeStyle: "short",
     });
-
-    const subject = `New Quote Request — ${serviceLabel} — ${firstName} ${lastName}`;
+    const subject = `New Quote Request — ${serviceName} — ${firstName} ${lastName}`;
 
     const html = `
 <!DOCTYPE html>
@@ -103,65 +123,83 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <h2 style="color: #2d5a27; margin-bottom: 8px;">New Quote Request</h2>
   <p style="color: #666; font-size: 14px; margin-bottom: 24px;">Submitted at ${escapeHtml(submittedAt)}</p>
   <table style="width: 100%; border-collapse: collapse;">
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Name</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(firstName)} ${escapeHtml(lastName)}</td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Phone</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Service</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(serviceLabel)}</td></tr>
-    ${propertySize ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Property size</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(propertySize)}</td></tr>` : ""}
-    ${propertyType ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Property type</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(propertyType)}</td></tr>` : ""}
-    ${timeline ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Timeline</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(timeline)}</td></tr>` : ""}
-    ${address ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Address / area</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(address)}</td></tr>` : ""}
-    ${budgetRange ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Budget range</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(budgetRange)}</td></tr>` : ""}
+    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Name</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(firstName))} ${escapeHtml(String(lastName))}</td></tr>
+    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="mailto:${escapeHtml(String(email))}">${escapeHtml(String(email))}</a></td></tr>
+    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Phone</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="tel:${escapeHtml(String(phone))}">${escapeHtml(String(phone))}</a></td></tr>
+    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Service</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(serviceName)}</td></tr>
+    ${propertySize ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Property size</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(propertySize))}</td></tr>` : ""}
+    ${propertyType ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Property type</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(propertyType))}</td></tr>` : ""}
+    ${timeline ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Timeline</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(timeline))}</td></tr>` : ""}
+    ${address ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Address / area</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(address))}</td></tr>` : ""}
+    ${budgetRange ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Budget range</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(String(budgetRange))}</td></tr>` : ""}
   </table>
   <p style="margin-top: 20px;"><strong>Project details</strong></p>
-  <p style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 8px;">${escapeHtml(message)}</p>
+  <p style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 8px;">${escapeHtml(projectDetails)}</p>
 </body>
 </html>`;
 
-    const text = `
-New Quote Request — ${serviceLabel}
-Submitted: ${submittedAt}
+    const text = [
+      `New Quote Request — ${serviceName}`,
+      `Submitted: ${submittedAt}`,
+      "",
+      `Name: ${firstName} ${lastName}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      `Service: ${serviceName}`,
+      propertySize ? `Property size: ${propertySize}` : "",
+      propertyType ? `Property type: ${propertyType}` : "",
+      timeline ? `Timeline: ${timeline}` : "",
+      address ? `Address: ${address}` : "",
+      budgetRange ? `Budget: ${budgetRange}` : "",
+      "",
+      "Project details:",
+      projectDetails,
+    ]
+      .filter(Boolean)
+      .join("\n");
 
-Name: ${firstName} ${lastName}
-Email: ${email}
-Phone: ${phone}
-Service: ${serviceLabel}
-${propertySize ? `Property size: ${propertySize}\n` : ""}${propertyType ? `Property type: ${propertyType}\n` : ""}${timeline ? `Timeline: ${timeline}\n` : ""}${address ? `Address: ${address}\n` : ""}${budgetRange ? `Budget: ${budgetRange}\n` : ""}
-
-Project details:
-${message}
-`;
-
-    await sgMail.send({
-      to: BUSINESS_EMAIL,
-      from: fromEmail,
-      replyTo: String(email).trim(),
-      subject,
+    const toEmail = getToEmail();
+    const boundary = "----=_Part_" + Date.now();
+    const rawMessage = [
+      `From: ${toEmail}`,
+      `To: ${toEmail}`,
+      `Reply-To: ${String(email).trim()}`,
+      `Subject: ${subject}`,
+      "MIME-Version: 1.0",
+      `Content-Type: multipart/alternative; boundary="${boundary}"`,
+      "",
+      `--${boundary}`,
+      "Content-Type: text/plain; charset=UTF-8",
+      "",
       text,
-      html,
+      `--${boundary}`,
+      "Content-Type: text/html; charset=UTF-8",
+      "",
+      html.trim(),
+      `--${boundary}--`,
+    ].join("\r\n");
+
+    const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+    oauth2Client.setCredentials({ refresh_token: refreshToken });
+    const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+
+    await gmail.users.messages.send({
+      userId: "me",
+      requestBody: {
+        raw: base64UrlEncode(rawMessage),
+      },
     });
 
-    // Optional: send confirmation to customer
-    const sendConfirmation = process.env.SENDGRID_SEND_CONFIRMATION === "true";
-    if (sendConfirmation) {
-      await sgMail.send({
-        to: String(email).trim(),
-        from: fromEmail,
-        subject: "We received your quote request — ESTA Landscaping",
-        text: "Thanks for contacting ESTA Landscaping. We've received your request and will get back to you as soon as possible.",
-        html: "<p>Thanks for contacting ESTA Landscaping. We've received your request and will get back to you as soon as possible.</p>",
-      });
-    }
-
-    return res.status(200).json({ success: true });
+    return res.status(200).json({
+      success: true,
+      message: "Your message has been sent. We'll get back to you soon.",
+    });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    const response = (err as { response?: { body?: unknown } })?.response?.body;
-    console.error("SendGrid error:", response || message);
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    console.error("Gmail API error:", msg);
     return res.status(500).json({
-      error:
-        "Something went wrong while sending your request. Please try again or contact us directly at " +
-        BUSINESS_EMAIL,
+      success: false,
+      message: `Something went wrong while sending your request. Please try again or contact us directly at ${getToEmail()}.`,
     });
   }
 }

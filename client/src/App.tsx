@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import CallbackPage from "@/pages/callback";
 import IntroAnimation, { hasSeenIntro } from "@/components/intro-animation";
 import AppShell from "@/components/app-shell";
 
@@ -13,6 +14,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/callback" component={CallbackPage} />
       <Route component={NotFound} />
     </Switch>
   );
