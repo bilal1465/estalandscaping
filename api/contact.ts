@@ -24,6 +24,45 @@ function base64UrlEncode(str: string): string {
     .replace(/=+$/, "");
 }
 
+const ESTA_GREEN = "#2d5a27";
+
+function buildConfirmationEmailHtml(firstName: string, serviceName: string, contactEmail: string): string {
+  const safeFirst = escapeHtml(firstName || "there");
+  const safeService = escapeHtml(serviceName);
+  const safeEmail = escapeHtml(contactEmail);
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #333; background-color: #f7f7f7;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f7f7f7; padding: 32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 560px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;">
+          <tr>
+            <td style="background: ${ESTA_GREEN}; padding: 28px 32px; text-align: center;">
+              <span style="font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.02em;">ESTA Landscaping</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 32px;">
+              <p style="margin: 0 0 20px; font-size: 16px;">Hi ${safeFirst},</p>
+              <p style="margin: 0 0 20px; font-size: 16px;">Thank you for reaching out. We've received your request for <strong style="color: ${ESTA_GREEN};">${safeService}</strong> and will review it shortly.</p>
+              <p style="margin: 0 0 24px; font-size: 16px;">Our team will follow up with you within <strong>24–48 hours</strong>. If you have any questions in the meantime, you can reach us at <a href="mailto:${safeEmail}" style="color: ${ESTA_GREEN}; text-decoration: none;">${safeEmail}</a>.</p>
+              <p style="margin: 0; font-size: 16px;">Best regards,<br><strong style="color: ${ESTA_GREEN};">The ESTA Landscaping Team</strong></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`.trim();
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -189,6 +228,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         raw: base64UrlEncode(rawMessage),
       },
     });
+
+    // Send confirmation email to the client (non-blocking: don't fail the request if this fails)
+    const clientEmail = String(email).trim();
+    try {
+      const confirmSubject = "Thanks for reaching out – ESTA Landscaping";
+      const confirmHtml = buildConfirmationEmailHtml(
+        String(firstName).trim(),
+        serviceName,
+        getToEmail(),
+      );
+      const confirmRaw = [
+        `From: ${getToEmail()}`,
+        `To: ${clientEmail}`,
+        `Subject: ${confirmSubject}`,
+        "MIME-Version: 1.0",
+        "Content-Type: text/html; charset=UTF-8",
+        "",
+        confirmHtml,
+      ].join("\r\n");
+      await gmail.users.messages.send({
+        userId: "me",
+        requestBody: {
+          raw: base64UrlEncode(confirmRaw),
+        },
+      });
+    } catch (confirmErr: unknown) {
+      console.error("Confirmation email failed (main email was still sent):", confirmErr);
+    }
 
     return res.status(200).json({
       success: true,

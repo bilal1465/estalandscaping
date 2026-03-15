@@ -2,5 +2,9 @@
   "rewrites": [
     { "source": "/api/:match*", "destination": "/api/:match*" },
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  ],
+  "env": {
+    "GMAIL_REDIRECT_URI": "https://estalandscaping.com/callback",
+    "GMAIL_EMAIL": "info@estalandscaping.com"
+  }
 }
