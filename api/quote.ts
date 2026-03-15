@@ -2,7 +2,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import sgMail from "@sendgrid/mail";
 
-const BUSINESS_EMAIL = "info.estalandscaping@gmail.com";
+const BUSINESS_EMAIL = "info@estalandscaping.com";
 
 function escapeHtml(s: string): string {
   if (!s) return "";

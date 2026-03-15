@@ -613,13 +613,13 @@ export default function QuoteRequestSection() {
                     </div>
                   </a>
                   <a
-                    href="mailto:info.estalandscaping@gmail.com"
+                    href="mailto:info@estalandscaping.com"
                     className="flex items-center gap-3 rounded-xl border border-gray-100 p-4 transition-colors hover:bg-forest/5 hover:border-forest/20"
                   >
                     <Mail className="h-5 w-5 text-forest shrink-0" />
                     <div>
                       <div className="text-xs text-gray-500">Email</div>
-                      <div className="font-medium text-forest break-all">info.estalandscaping@gmail.com</div>
+                      <div className="font-medium text-forest break-all">info@estalandscaping.com</div>
                     </div>
                   </a>
                 </div>
