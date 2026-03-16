@@ -79,7 +79,7 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="py-20 bg-beige">
+    <section id="services" className="section-contain py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Our Services</h2>

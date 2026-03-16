@@ -186,7 +186,7 @@ export default function QuoteRequestSection() {
   // Success state — green success message
   if (submitStatus === "success") {
     return (
-      <section id="contact" className="py-20 bg-beige">
+      <section id="contact" className="section-contain py-20 bg-beige">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimateInView>
             <div className="rounded-2xl bg-white p-10 shadow-lg border-2 border-green-200">
@@ -211,7 +211,7 @@ export default function QuoteRequestSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-beige">
+    <section id="contact" className="section-contain py-20 bg-beige">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateInView className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-4">Request a Free Quote</h2>

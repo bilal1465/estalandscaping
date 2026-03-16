@@ -30,7 +30,7 @@ const values = [
 
 export default function ValuesSection() {
   return (
-    <section id="values" className="py-20 bg-beige overflow-hidden">
+    <section id="values" className="section-contain py-20 bg-beige overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">

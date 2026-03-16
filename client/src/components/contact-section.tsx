@@ -59,7 +59,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-beige">
+    <section id="contact" className="section-contain py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Get In Touch</h2>

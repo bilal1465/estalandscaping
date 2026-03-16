@@ -36,7 +36,7 @@ export default function GallerySection() {
   const galleryAlts = galleryImages.map((_, i) => `Landscaping project ${i + 1}`);
 
   return (
-    <section id="gallery" className="py-20 bg-white">
+    <section id="gallery" className="section-contain py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateInView className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Our Work</h2>
@@ -73,7 +73,7 @@ export default function GallerySection() {
                   setLightboxIndex(index);
                   setLightboxOpen(true);
                 }}
-                className="group relative block w-full cursor-pointer overflow-hidden rounded-lg shadow-lg transition-[transform,box-shadow] duration-200 ease-out hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
+                className="group relative block w-full cursor-pointer overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
                 aria-label={`View full size: ${galleryAlts[index]}`}
               >
                 <img

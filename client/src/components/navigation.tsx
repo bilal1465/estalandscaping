@@ -11,36 +11,44 @@ export default function Navigation() {
 
   useEffect(() => {
     const threshold = 100;
-    const throttleMs = 120;
-    let lastY = -1;
+    const throttleMs = 180;
     let lastTime = 0;
     let rafId: number = 0;
 
-    const updateScrolled = () => {
-      const y = window.scrollY ?? document.documentElement.scrollTop;
+    const lenis = lenisRef?.current;
+    const useLenis = lenis && typeof (lenis as { on?: (e: string, cb: (e: { scroll?: number }) => void) => void }).on === "function";
+
+    const updateScrolled = (y: number) => {
       const now = Date.now();
-      if (now - lastTime < throttleMs && lastY >= 0) return;
+      if (now - lastTime < throttleMs) return;
       lastTime = now;
-      lastY = y;
       setScrolled(y > threshold);
     };
 
-    const onScroll = () => {
-      rafId = requestAnimationFrame(updateScrolled);
-    };
+    const onScroll = useLenis
+      ? (e: { scroll?: number }) => {
+          rafId = requestAnimationFrame(() => updateScrolled(e.scroll ?? 0));
+        }
+      : () => {
+          rafId = requestAnimationFrame(() =>
+            updateScrolled(window.scrollY ?? document.documentElement.scrollTop)
+          );
+        };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const lenis = lenisRef?.current;
-    if (lenis && typeof (lenis as { on?: (e: string, cb: () => void) => void }).on === "function") {
-      (lenis as { on: (e: string, cb: () => void) => void }).on("scroll", onScroll);
+    if (useLenis) {
+      (lenis as { on: (e: string, cb: (e: { scroll?: number }) => void) => void }).on("scroll", onScroll);
+      updateScrolled((lenis as { scroll?: number }).scroll ?? 0);
+    } else {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      updateScrolled(window.scrollY ?? document.documentElement.scrollTop);
     }
-    updateScrolled();
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
-      if (lenis && typeof (lenis as { off?: (e: string, cb: () => void) => void }).off === "function") {
-        (lenis as { off: (e: string, cb: () => void) => void }).off("scroll", onScroll);
+      if (useLenis && lenis && typeof (lenis as { off?: (e: string, cb: () => void) => void }).off === "function") {
+        (lenis as { off: (e: string, cb: (e: { scroll?: number }) => void) => void }).off("scroll", onScroll);
+      } else {
+        window.removeEventListener("scroll", onScroll);
       }
     };
   }, [lenisRef]);

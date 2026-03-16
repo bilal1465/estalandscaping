@@ -173,6 +173,11 @@
     color: var(--off-white);
   }
 
+  /* Below-fold sections: limit layout scope to reduce reflow cost during scroll */
+  .section-contain {
+    contain: layout;
+  }
+
   /* Scroll-in: subtle fade + slide (premium, consistent timing) */
   .animate-in-view {
     opacity: 0;

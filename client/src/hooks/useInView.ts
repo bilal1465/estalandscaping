@@ -1,38 +1,44 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-const options: IntersectionObserverInit = {
+const defaultOptions: IntersectionObserverInit = {
   root: null,
   rootMargin: "0px 0px -6% 0px",
   threshold: 0.08,
 };
 
 /**
- * Uses Intersection Observer (with requestAnimationFrame for class toggling)
- * to detect when element enters viewport. Use with .animate-in-view / .is-visible.
+ * Uses IntersectionObserver and applies visibility by mutating the DOM (adding a class).
+ * Does NOT use React state, so no rerenders when elements enter view — eliminates scroll jank
+ * when many elements (e.g. Our Services, Our Work) cross the viewport during fast scroll.
  */
-export function useInView(once = true) {
+export function useInView(
+  once = true,
+  onVisible?: (el: Element) => void
+) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (!entry) return;
-      requestAnimationFrame(() => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        } else if (!once) {
-          setIsVisible(false);
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const target = entry.target;
+        requestAnimationFrame(() => {
+          if (onVisible) {
+            onVisible(target);
+          }
+        });
+        if (once) {
+          observer.unobserve(target);
         }
-      });
-    }, options);
+      }
+    }, defaultOptions);
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [once]);
+  }, [once, onVisible]);
 
-  return { ref, isVisible };
+  return { ref };
 }

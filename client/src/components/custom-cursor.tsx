@@ -67,15 +67,19 @@ export default function CustomCursor() {
     document.addEventListener("mouseout", onLeave);
 
     let running = true;
+    let frameCount = 0;
     const tick = () => {
       if (!running) return;
-      pos.current.x += (target.current.x - pos.current.x) * 0.22;
-      pos.current.y += (target.current.y - pos.current.y) * 0.22;
-      currentScaleRef.current += (scaleRef.current - currentScaleRef.current) * 0.18;
-      const s = currentScaleRef.current;
-      const o = opacityRef.current;
-      cursor.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%) scale(${s})`;
-      cursor.style.opacity = String(o);
+      frameCount += 1;
+      if (frameCount % 2 === 0) {
+        pos.current.x += (target.current.x - pos.current.x) * 0.22;
+        pos.current.y += (target.current.y - pos.current.y) * 0.22;
+        currentScaleRef.current += (scaleRef.current - currentScaleRef.current) * 0.18;
+        const s = currentScaleRef.current;
+        const o = opacityRef.current;
+        cursor.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%) scale(${s})`;
+        cursor.style.opacity = String(o);
+      }
       rafId.current = requestAnimationFrame(tick);
     };
     rafId.current = requestAnimationFrame(tick);
