@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AnimateInView from "@/components/animate-in-view";
 import { BeforeAfterCard } from "@/components/before-after-card";
 import { ImageLightbox } from "@/components/image-lightbox";
 
@@ -38,59 +37,55 @@ export default function GallerySection() {
   return (
     <section id="gallery" className="section-contain py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateInView className="text-center mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Our Work</h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             See the transformations we've created for our clients. Every project tells a story of vision, craftsmanship, and attention to detail.
           </p>
-        </AnimateInView>
+        </div>
 
-        {/* Before & After — premium portfolio cards */}
-        <AnimateInView className="mb-10">
+        <div className="mb-10">
           <h3 className="text-2xl font-semibold text-forest font-serif text-center mb-2">Before & After</h3>
           <p className="text-center text-gray-500 max-w-xl mx-auto text-sm">See the difference our work makes.</p>
-        </AnimateInView>
+        </div>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-12 mb-16">
           {beforeAfterProjects.map((project, index) => (
-            <AnimateInView key={index} stagger={(index + 1) as 1 | 2}>
-              <BeforeAfterCard
-                before={project.before}
-                after={project.after}
-                title={project.title}
-                subtitle={project.subtitle}
-              />
-            </AnimateInView>
+            <BeforeAfterCard
+              key={index}
+              before={project.before}
+              after={project.after}
+              title={project.title}
+              subtitle={project.subtitle}
+            />
           ))}
         </div>
 
-        {/* Gallery Grid — same layout, click to enlarge */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (
-            <AnimateInView key={index} stagger={((index % 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
-              <button
-                type="button"
-                onClick={() => {
-                  setLightboxIndex(index);
-                  setLightboxOpen(true);
-                }}
-                className="group relative block w-full cursor-pointer overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
-                aria-label={`View full size: ${galleryAlts[index]}`}
-              >
-                <img
-                  src={image}
-                  alt={galleryAlts[index]}
-                  width={400}
-                  height={192}
-                  className="h-48 w-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.04]"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span
-                  className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
-                  aria-hidden
-                />
-              </button>
-            </AnimateInView>
+            <button
+              key={index}
+              type="button"
+              onClick={() => {
+                setLightboxIndex(index);
+                setLightboxOpen(true);
+              }}
+              className="group relative block w-full cursor-pointer overflow-hidden rounded-lg shadow-md transition-transform duration-200 ease-out hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
+              aria-label={`View full size: ${galleryAlts[index]}`}
+            >
+              <img
+                src={image}
+                alt={galleryAlts[index]}
+                width={400}
+                height={192}
+                className="h-48 w-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.04]"
+                loading="lazy"
+                decoding="async"
+              />
+              <span
+                className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+                aria-hidden
+              />
+            </button>
           ))}
         </div>
 

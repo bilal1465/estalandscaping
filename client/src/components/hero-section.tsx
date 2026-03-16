@@ -1,18 +1,11 @@
 import { Calculator, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLenisRef } from "@/contexts/lenis-context";
 
 export default function HeroSection() {
-  const lenisRef = useLenisRef();
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      if (lenisRef?.current) {
-        lenisRef.current.scrollTo(element, { offset: -80 });
-      } else {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 

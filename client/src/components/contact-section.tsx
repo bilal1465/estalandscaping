@@ -12,8 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { insertContactRequestSchema, type InsertContactRequest } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import AnimateInView from "@/components/animate-in-view";
-
 export default function ContactSection() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -61,17 +59,15 @@ export default function ContactSection() {
   return (
     <section id="contact" className="section-contain py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateInView className="text-center mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Get In Touch</h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Ready to transform your outdoor space? Contact us today for a free consultation and quote.
           </p>
-        </AnimateInView>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <AnimateInView stagger={1}>
-            <Card className="shadow-lg mb-8">
+          <Card className="shadow-md mb-8">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold text-forest font-serif mb-6">Contact Information</h3>
                 <div className="space-y-4">
@@ -93,12 +89,7 @@ export default function ContactSection() {
               </CardContent>
             </Card>
 
-
-          </AnimateInView>
-
-          {/* Contact Form */}
-          <AnimateInView stagger={2}>
-          <Card className="shadow-lg">
+          <Card className="shadow-md">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold text-forest font-serif mb-6">Send Us a Message</h3>
               <Form {...form}>
@@ -240,7 +231,6 @@ export default function ContactSection() {
               </Form>
             </CardContent>
           </Card>
-          </AnimateInView>
         </div>
       </div>
     </section>

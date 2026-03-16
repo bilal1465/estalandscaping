@@ -96,24 +96,6 @@
     }
     html { scroll-behavior: auto; }
   }
-
-  /* Lenis smooth scroll: prevent conflict with native smooth */
-  html.lenis,
-  html.lenis.lenis-smooth {
-    scroll-behavior: auto;
-  }
-  .lenis.lenis-smooth {
-    scroll-behavior: auto;
-  }
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
-  .lenis.lenis-smooth iframe {
-    pointer-events: none;
-  }
 }
 
 @layer components {

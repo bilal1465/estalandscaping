@@ -1,11 +1,9 @@
-import AnimateInView from "@/components/animate-in-view";
-
 export default function AboutSection() {
   return (
     <section id="about" className="section-contain py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <AnimateInView className="space-y-6">
+          <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">
               About ESTA Landscaping
             </h2>
@@ -25,22 +23,22 @@ export default function AboutSection() {
                 <div className="text-gray-600">Projects Completed</div>
               </div>
             </div>
-          </AnimateInView>
-          <AnimateInView stagger={2}>
-            <div className="relative">
-              <img 
-                src="/images/image-29.jpg" 
-                alt="STA Landscaping professional work - beautiful front yard with concrete walkway" 
-                className="rounded-xl shadow-lg w-full h-auto"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute -bottom-6 -right-6 bg-forest text-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-                <div className="text-2xl font-bold font-serif">★ 4.9</div>
-                <div className="text-sm opacity-90">Client Rating</div>
-              </div>
+          </div>
+          <div className="relative">
+            <img
+              src="/images/image-29.jpg"
+              alt="ESTA Landscaping professional work - beautiful front yard with concrete walkway"
+              className="rounded-xl shadow-lg w-full h-auto"
+              width={600}
+              height={400}
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="absolute -bottom-6 -right-6 bg-forest text-white p-6 rounded-xl shadow-lg">
+              <div className="text-2xl font-bold font-serif">★ 4.9</div>
+              <div className="text-sm opacity-90">Client Rating</div>
             </div>
-          </AnimateInView>
+          </div>
         </div>
       </div>
     </section>

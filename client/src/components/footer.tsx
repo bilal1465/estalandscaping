@@ -1,5 +1,4 @@
 import { Linkedin, Instagram } from "lucide-react";
-import { useLenisRef } from "@/contexts/lenis-context";
 
 const SOCIAL_LINKS = [
   {
@@ -20,16 +19,10 @@ const SOCIAL_LINKS = [
 ] as const;
 
 export default function Footer() {
-  const lenisRef = useLenisRef();
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      if (lenisRef?.current) {
-        lenisRef.current.scrollTo(element, { offset: -80 });
-      } else {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 

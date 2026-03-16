@@ -26,7 +26,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import AnimateInView from "@/components/animate-in-view";
 
 const STEPS = [
   { id: 1, title: "Contact", subtitle: "Your details" },
@@ -188,8 +187,7 @@ export default function QuoteRequestSection() {
     return (
       <section id="contact" className="section-contain py-20 bg-beige">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <AnimateInView>
-            <div className="rounded-2xl bg-white p-10 shadow-lg border-2 border-green-200">
+          <div className="rounded-2xl bg-white p-10 shadow-md border-2 border-green-200">
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                 <Check className="h-8 w-8 text-green-600" />
               </div>
@@ -204,7 +202,6 @@ export default function QuoteRequestSection() {
                 Back to home
               </Button>
             </div>
-          </AnimateInView>
         </div>
       </section>
     );
@@ -213,15 +210,15 @@ export default function QuoteRequestSection() {
   return (
     <section id="contact" className="section-contain py-20 bg-beige">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateInView className="text-center mb-12">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-4">Request a Free Quote</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Tell us a bit about your project and we’ll get back to you with the next steps.
           </p>
-        </AnimateInView>
+        </div>
 
         {/* Trust badges */}
-        <AnimateInView className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {[
             { icon: ShieldCheck, text: "No obligation quote" },
             { icon: Clock, text: "Typically responds within 24 hours" },
@@ -236,12 +233,12 @@ export default function QuoteRequestSection() {
               {text}
             </span>
           ))}
-        </AnimateInView>
+        </div>
 
         <div className="grid lg:grid-cols-12 gap-10">
           {/* Main form card */}
           <div className="lg:col-span-8">
-            <div className="rounded-2xl bg-white p-6 shadow-lg sm:p-8">
+            <div className="rounded-2xl bg-white p-6 shadow-md sm:p-8">
               {/* Progress */}
               <div className="mb-8">
                 <div className="flex justify-between text-sm text-gray-500 mb-2">
@@ -597,8 +594,7 @@ export default function QuoteRequestSection() {
 
           {/* Contact card */}
           <div className="lg:col-span-4">
-            <AnimateInView stagger={1}>
-              <div className="rounded-2xl bg-white p-6 shadow-lg lg:sticky lg:top-24">
+            <div className="rounded-2xl bg-white p-6 shadow-md lg:sticky lg:top-24">
                 <h3 className="text-xl font-semibold text-forest font-serif mb-4">Contact us</h3>
                 <p className="text-sm text-gray-500 mb-6">Prefer to talk? Reach out directly.</p>
                 <div className="space-y-4">
@@ -625,7 +621,6 @@ export default function QuoteRequestSection() {
                 </div>
                 <p className="mt-4 text-xs text-gray-400">Typically responds within 24 hours</p>
               </div>
-            </AnimateInView>
           </div>
         </div>
       </div>

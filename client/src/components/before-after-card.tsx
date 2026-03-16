@@ -34,7 +34,7 @@ export function BeforeAfterCard({ before, after, title, subtitle }: BeforeAfterC
   }, [pausedUntil]);
 
   return (
-    <div className="group flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg transition-transform duration-200 ease-out hover:shadow-xl">
+    <div className="group flex flex-col rounded-2xl overflow-hidden bg-white shadow-md transition-transform duration-200 ease-out hover:shadow-lg">
       {/* Image area with single visible image + fade */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
         {images.map((src, i) => (
@@ -42,6 +42,8 @@ export function BeforeAfterCard({ before, after, title, subtitle }: BeforeAfterC
             key={src}
             src={src}
             alt={labels[i]}
+            width={400}
+            height={300}
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out ${
               i === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}

@@ -1,6 +1,5 @@
 import { Sprout, Palette, Layers, Mountain, Calendar, Compass } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import AnimateInView from "@/components/animate-in-view";
 
 const services = [
   {
@@ -81,38 +80,40 @@ export default function ServicesSection() {
   return (
     <section id="services" className="section-contain py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateInView className="text-center mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest font-serif mb-6">Our Services</h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             From regular maintenance to complete landscape design, we offer comprehensive services to keep your outdoor space looking its best year-round.
           </p>
-        </AnimateInView>
-        
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <AnimateInView key={index} stagger={(index % 6) + 1 as 1 | 2 | 3 | 4 | 5 | 6}>
-              <Card className="bg-white shadow-lg overflow-hidden h-full flex flex-col">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-48 object-cover"
+            <Card key={index} className="bg-white shadow-md overflow-hidden h-full flex flex-col">
+              <div className="w-full aspect-[4/3] bg-gray-100 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                  width={400}
+                  height={300}
                   loading="lazy"
                   decoding="async"
                 />
-                <CardContent className="p-6 flex-1">
-                  <div className="flex items-center mb-3">
-                    <service.icon className="text-forest text-2xl mr-3 h-6 w-6 flex-shrink-0" />
-                    <h3 className="text-xl font-semibold text-forest">{service.title}</h3>
-                  </div>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex}>• {feature}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </AnimateInView>
+              </div>
+              <CardContent className="p-6 flex-1">
+                <div className="flex items-center mb-3">
+                  <service.icon className="text-forest text-2xl mr-3 h-6 w-6 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold text-forest">{service.title}</h3>
+                </div>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {service.features.map((feature, featureIndex) => (
+                    <li key={featureIndex}>• {feature}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

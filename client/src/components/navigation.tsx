@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from '../../public/images/logo.jpg'
-import { useLenisRef } from "@/contexts/lenis-context";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const lenisRef = useLenisRef();
 
   useEffect(() => {
     const threshold = 100;
@@ -15,54 +13,33 @@ export default function Navigation() {
     let lastTime = 0;
     let rafId: number = 0;
 
-    const lenis = lenisRef?.current;
-    const useLenis = lenis && typeof (lenis as { on?: (e: string, cb: (e: { scroll?: number }) => void) => void }).on === "function";
-
-    const updateScrolled = (y: number) => {
+    const updateScrolled = () => {
       const now = Date.now();
       if (now - lastTime < throttleMs) return;
       lastTime = now;
+      const y = window.scrollY ?? document.documentElement.scrollTop;
       setScrolled(y > threshold);
     };
 
-    const onScroll = useLenis
-      ? (e: { scroll?: number }) => {
-          rafId = requestAnimationFrame(() => updateScrolled(e.scroll ?? 0));
-        }
-      : () => {
-          rafId = requestAnimationFrame(() =>
-            updateScrolled(window.scrollY ?? document.documentElement.scrollTop)
-          );
-        };
+    const onScroll = () => {
+      rafId = requestAnimationFrame(updateScrolled);
+    };
 
-    if (useLenis) {
-      (lenis as { on: (e: string, cb: (e: { scroll?: number }) => void) => void }).on("scroll", onScroll);
-      updateScrolled((lenis as { scroll?: number }).scroll ?? 0);
-    } else {
-      window.addEventListener("scroll", onScroll, { passive: true });
-      updateScrolled(window.scrollY ?? document.documentElement.scrollTop);
-    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updateScrolled();
 
     return () => {
       cancelAnimationFrame(rafId);
-      if (useLenis && lenis && typeof (lenis as { off?: (e: string, cb: () => void) => void }).off === "function") {
-        (lenis as { off: (e: string, cb: (e: { scroll?: number }) => void) => void }).off("scroll", onScroll);
-      } else {
-        window.removeEventListener("scroll", onScroll);
-      }
+      window.removeEventListener("scroll", onScroll);
     };
-  }, [lenisRef]);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      if (lenisRef?.current) {
-        lenisRef.current.scrollTo(element, { offset: -80 });
-      } else {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      setIsMenuOpen(false);
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    setIsMenuOpen(false);
   };
 
   return (
