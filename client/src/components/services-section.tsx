@@ -1,4 +1,4 @@
-import { Sprout, Palette, Layers, Mountain, Calendar, Compass } from "lucide-react";
+import { Sprout, Palette, Layers, Mountain, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
@@ -63,16 +63,17 @@ const services = [
     image: "/images/image-37.JPG"
   },
   {
-    icon: Compass,
-    title: "Custom Landscaping",
-    description: "Complete landscape design and installation including hardscaping, water features, and outdoor living spaces.",
+    icon: Layers,
+    title: "Decking & Fencing",
+    description:
+      "We design and build high-end decking and fencing solutions that elevate your outdoor space with durability, precision, and a clean architectural finish.",
     features: [
-      "Design consultation",
-      "Hardscape installation",
-      "Water features",
-      "Outdoor living spaces"
+      "Custom deck design & layout",
+      "Composite & wood decking options",
+      "Privacy and decorative fencing",
+      "Professional installation & finishing",
     ],
-    image: "/images/IMG_8218.mov"
+    image: "/images/service-decking-fencing.jpg",
   }
 ];
 

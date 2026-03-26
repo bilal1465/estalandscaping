@@ -15,7 +15,8 @@ export default function GallerySection() {
     },
     {
       title: "Backyard transformation",
-      subtitle: "Professional lawn striping and retaining wall installation.",
+      subtitle:
+        "Decorative rock landscaping with structured pathway and defined borders, creating a clean, functional, and low-maintenance outdoor space.",
       before: "/images/image-34.jpg",
       after: "/images/image-35.jpg",
     },
